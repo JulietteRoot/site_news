@@ -1,0 +1,36 @@
+body
+{
+	background-color: #A9EAFE;
+}
+
+legend
+{
+	font-weight: bold;
+}
+
+.gras
+{
+	font-weight: bold;
+}
+
+.italique
+{
+	font-style: italic;
+}
+
+.rouge
+{
+	color: red;
+}
+
+.validation:hover
+{
+	color:green;
+	font-weight:bold;
+}
+
+.annulation:hover
+{
+	color:red;
+	font-weight:bold;
+}
