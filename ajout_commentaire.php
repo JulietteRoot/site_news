@@ -80,7 +80,6 @@ if ( isset ($_GET['id']) )
 					echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />
 					     Veuiller choisir un autre pseudo !</p>';
 				}
-			}
 				else
 				{
 					$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
@@ -94,34 +93,29 @@ if ( isset ($_GET['id']) )
 					echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
 					Vous allez être automatiquement redirigé(e) vers la news...</p>';
 				}
+		
+			}
+			else
+			{
+				$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
+				$req -> execute (array (
+					'id_news' => $_GET['id'],
+					'commentaire' => htmlspecialchars($_POST['commentaire']).' ('.$pseudo.')'
+					) );
+
+				$req -> closeCursor(); 
+				header('Refresh:5;url=index.php#'.$id_news);
+				echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
+				Vous allez être automatiquement redirigé(e) vers la news...</p>';
+			}
+
 		}
 		else
 		{
 			echo '<p class="rouge gras">Vous devez saisir un commentaire !</p>';
 
 		}	
-/*
-			$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
-			$req -> execute (array (htmlspecialchars($_POST['pseudo'])) );  
-			
-			$count = $req->rowCount();
-			$req -> closeCursor(); 
 
-			if($count == 1) 
-			{
-				echo '<p class="rouge">Ce pseudo est déjà utilisé par un autre membre !<br />
-				     Veuiller choisir un autre pseudo !</p>';
-			}
-			else
-			{
-				$req = $bdd -> prepare('INSERT INTO membres VALUES (:pseudo,:password)');
-				$req -> execute (array (
-					'pseudo' => htmlspecialchars($_POST['pseudo']),
-					'password' => hash('sha1',htmlspecialchars($_POST['password']))
-					) );
-				$req -> closeCursor();
- 			}
-*/
 		echo '<a href="index.php#'.$id_news.'">retour à la news</a>';
 		$req -> closeCursor();
 
