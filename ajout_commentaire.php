@@ -34,16 +34,18 @@ if ( isset ($_GET['id']) )
 		else
 		{
 			?>
-			<p> <label for="pseudo">Votre pseudo (<span class="italique">facultatif</span>) : </label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25" /> </p>
+			<p> <label for="pseudo">Votre pseudo (<span class="italique">facultatif</span>) : </label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25"
 			<?php
 			if ( isset($_POST['pseudo']) && strlen($_POST['pseudo']) > 0 )
 			{
+				echo 'value="'.$_POST['pseudo'].'"';
 				$pseudo = htmlspecialchars($_POST['pseudo']);
 			}
 			else
 			{
 				$pseudo = "Anonyme";
 			}
+ 			echo '/> </p>';
    		}
 		?>
 		<p> <textarea name="commentaire" id="commentaire" rows="10" cols="50">Écrivez votre commentaire ici.</textarea> </p>
@@ -61,10 +63,16 @@ if ( isset ($_GET['id']) )
 				) );
 
 			$req -> closeCursor(); 
+			header('Refresh:5;url=index.php#'.$id_news);
+			echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
+			Vous allez être automatiquement redirigé(e) vers la news...</p>';
+		}
+		else
+		{
+			echo '<p class="rouge gras">Vous devez saisir un commentaire !</p>';
+
 		}	
-	//		header('Location:index.php?news=ok');
 /*
-			$bdd = new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
 			$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
 			$req -> execute (array (htmlspecialchars($_POST['pseudo'])) );  
 			
