@@ -16,10 +16,15 @@ if ( isset ($_GET['id']) )
 	{	
 		$bdd = new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
 
-		$req = $bdd->query('SELECT titre FROM news WHERE id='.$_GET['id']);
+		$req = $bdd->query('SELECT id, titre FROM news WHERE id='.$_GET['id']);
 		$donnees = $req->fetch();
 		echo '<p class="gras">'.$donnees['titre'].'</p>';
+		?>
+		
+		<?php
+		echo '<a href="index.php#'.$donnees['id'].'">retour à la news</a>';
 		$req -> closeCursor(); 
+
 
 	}
 	catch (Exception $e)
@@ -30,11 +35,11 @@ if ( isset ($_GET['id']) )
 else
 {
 	echo '<p class="rouge gras">Erreur. Le lien que vous avez suivi n\'est pas valide...</p>';
+	echo '<p><a href="index.php">retour à l\'accueil</a></p>';
 }
 
 ?>
 
-<p><a href="index.php">retour à l'accueil</a></p>
 
 </body>
 

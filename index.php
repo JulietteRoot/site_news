@@ -48,7 +48,7 @@ $req = $bdd->query('SELECT id, titre, contenu FROM news ORDER BY id DESC');
 
 while ($donnees = $req->fetch())
 {
-	echo '<p> <span class="gras">'.$donnees['titre'].'</span><br />'
+	echo '<p> <span class="gras" id="'.$donnees['id'].'">'.$donnees['titre'].'</span><br />'
 	.$donnees['contenu'].'<br />';
 	echo '<a href="ajout_commentaire.php?id='.$donnees['id'].'">commentaires</a></p><br />';	
 }	
