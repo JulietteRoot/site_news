@@ -29,20 +29,40 @@ if ( isset ($_GET['id']) )
 		if ( isset ( $_SESSION['pseudo'] ) )
 		{
 			echo 'Votre pseudo : <span class="gras">'.$_SESSION['pseudo'].'</span><br />';
+			$pseudo = $_SESSION['pseudo'];
 		}
 		else
 		{
+			?>
+			<p> <label for="pseudo">Votre pseudo (<span class="italique">facultatif</span>) : </label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25" /> </p>
+			<?php
+			if ( isset($_POST['pseudo']) && strlen($_POST['pseudo']) > 0 )
+			{
+				$pseudo = htmlspecialchars($_POST['pseudo']);
+			}
+			else
+			{
+				$pseudo = "Anonyme";
+			}
+   		}
 		?>
-		<p> <label for="pseudo">Votre pseudo :</label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25" /> </p>
-		<?php
-		}
-		?>
-		<p> <textarea name="contenu" id="contenu" rows="10" cols="50">Écrivez votre commentaire ici.</textarea> </p>
+		<p> <textarea name="commentaire" id="commentaire" rows="10" cols="50">Écrivez votre commentaire ici.</textarea> </p>
 		<input class="validation" type="submit" value="envoyer" /> <input class="annulation" type="reset" value="annuler" />
 		</fieldset>
 		</form>
 
 		<?php
+		if ( isset($_POST['commentaire']) && strlen($_POST['commentaire']) > 0 )
+		{
+			$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
+			$req -> execute (array (
+				'id_news' => $_GET['id'],
+				'commentaire' => htmlspecialchars($_POST['commentaire']).' ('.$pseudo.')'
+				) );
+
+			$req -> closeCursor(); 
+		}	
+	//		header('Location:index.php?news=ok');
 /*
 			$bdd = new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
 			$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
