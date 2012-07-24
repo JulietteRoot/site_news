@@ -48,24 +48,52 @@ if ( isset ($_GET['id']) )
  			echo '/> </p>';
    		}
 		?>
-		<p> <textarea name="commentaire" id="commentaire" rows="10" cols="50">Écrivez votre commentaire ici.</textarea> </p>
+		<p> <textarea name="commentaire" id="commentaire" rows="10" cols="50"><?php
+		if ( isset($_POST['commentaire']) && strlen($_POST['commentaire']) > 0 )
+		{
+			echo $_POST['commentaire'];
+		}
+		else
+		{
+			echo 'Écrivez votre commentaire ici.';
+		}
+		?>
+		</textarea> </p>
 		<input class="validation" type="submit" value="envoyer" /> <input class="annulation" type="reset" value="annuler" />
 		</fieldset>
 		</form>
 
 		<?php
-		if ( isset($_POST['commentaire']) && strlen($_POST['commentaire']) > 0 )
+		if ( isset ($_POST['commentaire']) &&
+		     strlen($_POST['commentaire']) > 0 )
 		{
-			$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
-			$req -> execute (array (
-				'id_news' => $_GET['id'],
-				'commentaire' => htmlspecialchars($_POST['commentaire']).' ('.$pseudo.')'
-				) );
+			if (isset ($_POST['pseudo']) )
+			{
+				$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
+				$req -> execute (array ($_POST['pseudo']));
+			
+				$count = $req->rowCount();
+				$req -> closeCursor(); 
+	
+				if($count == 1) 
+				{
+					echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />
+					     Veuiller choisir un autre pseudo !</p>';
+				}
+			}
+				else
+				{
+					$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
+					$req -> execute (array (
+						'id_news' => $_GET['id'],
+						'commentaire' => htmlspecialchars($_POST['commentaire']).' ('.$pseudo.')'
+						) );
 
-			$req -> closeCursor(); 
-			header('Refresh:5;url=index.php#'.$id_news);
-			echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
-			Vous allez être automatiquement redirigé(e) vers la news...</p>';
+					$req -> closeCursor(); 
+					header('Refresh:5;url=index.php#'.$id_news);
+					echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
+					Vous allez être automatiquement redirigé(e) vers la news...</p>';
+				}
 		}
 		else
 		{
