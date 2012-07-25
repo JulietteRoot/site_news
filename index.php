@@ -12,14 +12,7 @@
 
 <?php
 
-try
-{
-	$bdd = connection();
-}
-catch (Exception $e)
-{
-	die('Erreur:'.$e->getMessage());
-}
+$bdd = connection();
 
 ?>
 

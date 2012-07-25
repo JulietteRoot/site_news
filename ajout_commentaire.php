@@ -13,102 +13,82 @@
 <?php
 if ( isset ($_GET['id']) )
 {
-	try
-	{	
-		$bdd = connection();
+	$bdd = connection();
 
-		$req = $bdd->query('SELECT id, titre FROM news WHERE id='.$_GET['id']);
-		$donnees = $req->fetch();
-		$id_news = $donnees['id'];
-		echo '<p class="gras">'.$donnees['titre'].'</p>';
-		
-		?>
-		
-		<form method="POST" action="">
-		<fieldset><legend>Ajout d'un nouveau commentaire</legend>
-		<?php
-		if ( isset ( $_SESSION['pseudo'] ) )
-		{
-			echo 'Votre pseudo : <span class="gras">'.$_SESSION['pseudo'].'</span><br />';
-			$pseudo = $_SESSION['pseudo'];
-		}
-		else
-		{
-			?>
-			<p> <label for="pseudo">Votre pseudo (<acronym class="italique" title='Si vous ne mentionnez pas de pseudo, vous apparaîtrez en tant que "Anonyme".'>facultatif</acronym>) : </label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25"
-			<?php
-			if ( isset($_POST['pseudo']) && strlen($_POST['pseudo']) > 0 )
-			{
-				echo 'value="'.$_POST['pseudo'].'"';
-				$pseudo = htmlspecialchars($_POST['pseudo']);
-			}
-			else
-			{
-				$pseudo = "Anonyme";
-			}
- 			echo '/> </p>';
-   		}
-		?>
-		<p> <textarea name="commentaire" id="commentaire" rows="10" cols="50"><?php
-		if ( isset($_POST['commentaire']) && strlen($_POST['commentaire']) > 0 )
-		{
-			echo $_POST['commentaire'];
-		}
-		else
-		{
-			echo 'Écrivez votre commentaire ici.';
-		}
-		?>
-		</textarea> </p>
-		<input class="validation" type="submit" value="envoyer" /> <input class="annulation" type="reset" value="annuler" />
-		</fieldset>
-		</form>
-
-		<?php
-		if ( isset ($_POST['commentaire']) &&
-		     strlen($_POST['commentaire']) > 0 )
-		{
-			if (isset ($_POST['pseudo']) )
-			{
-				$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
-				$req -> execute (array ($_POST['pseudo']));
-			
-				$count = $req->rowCount();
-				$req -> closeCursor(); 
+	$req = $bdd->query('SELECT id, titre FROM news WHERE id='.$_GET['id']);
+	$donnees = $req->fetch();
+	$id_news = $donnees['id'];
+	echo '<p class="gras">'.$donnees['titre'].'</p>';
 	
-				if($count == 1) 
-				{
-					echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />
-					     Veuiller choisir un autre pseudo !</p>';
-				}
-				else
-				{
-					$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
-					$req -> execute (array (
-						'id_news' => $_GET['id'],
-						'commentaire' => htmlspecialchars($_POST['commentaire']).' ('.$pseudo.')'
-						) );
+	?>
+	
+	<form method="POST" action="">
+	<fieldset><legend>Ajout d'un nouveau commentaire</legend>
+	<?php
+	if ( isset ( $_SESSION['pseudo'] ) )
+	{
+		echo 'Votre pseudo : <span class="gras">'.$_SESSION['pseudo'].'</span><br />';
+		$pseudo = $_SESSION['pseudo'];
+	}
+	else
+	{
+		?>
+		<p> <label for="pseudo">Votre pseudo (<acronym class="italique" title='Si vous ne mentionnez pas de pseudo, vous apparaîtrez en tant que "Anonyme".'>facultatif</acronym>) : </label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25"
+		<?php
+		if ( isset($_POST['pseudo']) && strlen($_POST['pseudo']) > 0 )
+		{
+			echo 'value="'.$_POST['pseudo'].'"';
+			$pseudo = htmlspecialchars($_POST['pseudo']);
+		}
+		else
+		{
+			$pseudo = "Anonyme";
+		}
+		echo '/> </p>';
+	}
+	?>
+	<p> <textarea name="commentaire" id="commentaire" rows="10" cols="50"><?php
+	if ( isset($_POST['commentaire']) && strlen($_POST['commentaire']) > 0 )
+	{
+		echo $_POST['commentaire'];
+	}
+	else
+	{
+		echo 'Écrivez votre commentaire ici.';
+	}
+	?>
+	</textarea> </p>
+	<input class="validation" type="submit" value="envoyer" /> <input class="annulation" type="reset" value="annuler" />
+	</fieldset>
+	</form>
 
-					$req -> closeCursor(); 
-					header('Refresh:5;url=index.php#'.$id_news);
-					echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
-					Vous allez être automatiquement redirigé(e) vers la news...</p>';
-				}
+	<?php
+	if ( isset ($_POST['commentaire']) &&
+	     strlen($_POST['commentaire']) > 0 )
+	{
+		if (isset ($_POST['pseudo']) )
+		{
+			$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
+			$req -> execute (array ($_POST['pseudo']));
 		
+			$count = $req->rowCount();
+			$req -> closeCursor(); 
+
+			if($count == 1) 
+			{
+				echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />
+				     Veuiller choisir un autre pseudo !</p>';
 			}
 			else
 			{
-				$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
-				$req -> execute (array (
-					'id_news' => $_GET['id'],
-					'commentaire' => htmlspecialchars($_POST['commentaire']).' ('.$pseudo.')'
-					) );
-
-				$req -> closeCursor(); 
-				header('Refresh:5;url=index.php#'.$id_news);
-				echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
-				Vous allez être automatiquement redirigé(e) vers la news...</p>';
+				insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
 			}
+	
+		}
+		else
+		{
+			insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
+		}
 
 		}
 		else
@@ -131,11 +111,6 @@ if ( isset ($_GET['id']) )
 	
 		$req -> closeCursor();	
 
-	}
-	catch (Exception $e)
-	{
-		die('Erreur:'.$e->getMessage());
-	}
 }
 else
 {
