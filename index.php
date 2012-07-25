@@ -8,12 +8,13 @@
 </head>
 
 <body>
+<?php include("fonctions.php"); ?>
 
 <?php
 
 try
 {
-	$bdd=new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
+	$bdd = connection();
 }
 catch (Exception $e)
 {

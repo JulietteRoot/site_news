@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<?php include("fonctions.php"); ?>
 
 <?php
 if ( isset ( $_SESSION['pseudo'] ) )
@@ -35,7 +36,7 @@ if (
 {
 	try
 	{	
-		$bdd = new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
+		$bdd = connection();
 		$req = $bdd -> prepare('INSERT INTO news VALUES (\'\',:titre,:contenu)');
 		$req -> execute (array (
 			'titre' => htmlspecialchars($_POST['titre']). ' (par ' .$_SESSION['pseudo'].')',

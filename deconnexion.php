@@ -11,6 +11,7 @@ session_unset();
 </head>
 
 <body>
+<?php include("fonctions.php"); ?>
 
 <?php
 header('Refresh:4;url=index.php');

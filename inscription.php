@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<?php include("fonctions.php"); ?>
 
 <form method="POST" action="">
 <fieldset><legend>Inscription</legend>
@@ -41,7 +42,8 @@ if (
 	{
 		try
 		{	
-			$bdd = new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
+			$bdd = connection();
+
 			$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
 			$req -> execute (array (htmlspecialchars($_POST['pseudo'])) );  
 			

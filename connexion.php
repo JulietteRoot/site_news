@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<?php include("fonctions.php"); ?>
 
 <form method="POST" action="">
 <fieldset><legend>Connexion</legend>
@@ -33,7 +34,7 @@ if (
 {
 	try
 	{	
-		$bdd = new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
+		$bdd = connection();
 		$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = :pseudo AND password = :password');
 		$req -> execute (array (
 			'pseudo' => htmlspecialchars($_POST['pseudo']),

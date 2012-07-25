@@ -8,13 +8,14 @@
 </head>
 
 <body>
+<?php include("fonctions.php"); ?>
 
 <?php
 if ( isset ($_GET['id']) )
 {
 	try
 	{	
-		$bdd = new PDO('mysql:host=localhost;dbname=site_news','root','meat_boy');
+		$bdd = connection();
 
 		$req = $bdd->query('SELECT id, titre FROM news WHERE id='.$_GET['id']);
 		$donnees = $req->fetch();
