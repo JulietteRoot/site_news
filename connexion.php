@@ -13,12 +13,7 @@
 <form method="POST" action="">
 <fieldset><legend>Connexion</legend>
 <p> <label for="pseudo">Pseudo :</label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25"
-<?php
-if ( isset($_POST['pseudo']) )
-{
-	echo 'value="'.$_POST['pseudo'].'"';
-}
-?>
+<?php valeur_si_existante($_POST['pseudo']); ?>
 /> </p>
 <p> <label for="password">Mot de passe :</label> <input type="password" name="password" id="password" size="30" maxlength="25"/> </p>
 <input class="validation" type="submit" value="valider" /> <input class="annulation" type="reset" value="annuler" />

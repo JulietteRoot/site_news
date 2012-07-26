@@ -27,4 +27,12 @@ function insertion_commentaire($bdd,$id_news,$commentaire,$pseudo)
 	Vous allez être automatiquement redirigé(e) vers la news...</p>';
 }
 
+function valeur_si_existante($var)
+{
+	if ( isset($var) )
+	{
+		echo 'value="'.$var.'"';
+	}
+}
+
 ?>
