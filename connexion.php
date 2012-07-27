@@ -30,25 +30,17 @@ if (
 	try
 	{	
 		$bdd = connection();
-		$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = :pseudo AND password = :password');
-		$req -> execute (array (
-			'pseudo' => htmlspecialchars($_POST['pseudo']),
-			'password' => hash('sha1',htmlspecialchars($_POST['password']))
-			) );
-
-		$count = $req->rowCount();
-		$req -> closeCursor(); 
-
-			if($count == 1) 
-			{
-				$_SESSION['pseudo'] = htmlspecialchars($_POST['pseudo']);
-				header('Location:index.php');
-			}
-			else
-			{
-				echo '<p class="rouge">Attention, le pseudo et/ou le mot de passe sont erronés.<br />
-				     Vérifiez votre saisie !</p>'; 
-			}
+		$i = identification_sur_le_site($bdd,$_POST['pseudo'],$_POST['password']);
+		if($i == 0) 
+		{
+			$_SESSION['pseudo'] = htmlspecialchars($_POST['pseudo']);
+			header('Location:index.php');
+		}
+		else
+		{
+			echo '<p class="rouge">Attention, le pseudo et/ou le mot de passe sont erronés.<br />
+			     Vérifiez votre saisie !</p>'; 
+		}
 	}
 	catch (Exception $e)
 	{
