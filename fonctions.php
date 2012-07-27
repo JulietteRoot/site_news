@@ -38,14 +38,6 @@ function insertion_commentaire($bdd,$id_news,$commentaire,$pseudo)
 	Vous allez être automatiquement redirigé(e) vers la news...</p>';
 }
 
-function valeur_si_existante($var)
-{
-	if ( isset($var) && strlen($var) > 0 )
-	{
-		echo 'value="'.$var.'"';
-	}
-}
-
 function affichage_news($bdd)
 {
 	$req = $bdd->query('SELECT id, titre, contenu FROM news ORDER BY id DESC');
@@ -70,6 +62,25 @@ function affichage_commentaires($bdd, $id_news)
 	}
 
 	$req -> closeCursor();
+}
+
+function affichage_titre_news($bdd,$id)
+{
+	$req = $bdd->prepare('SELECT id, titre FROM news WHERE id=?');
+	$req -> execute(array($id));
+	$donnees = $req->fetch();
+	$id_news = $donnees['id'];
+	echo '<p class="gras">'.$donnees['titre'].'</p>';
+	$req -> closeCursor();
+	return $id_news;
+}
+
+function valeur_si_existante($var)
+{
+	if ( isset($var) && strlen($var) > 0 )
+	{
+		echo 'value="'.$var.'"';
+	}
 }
 
 ?>

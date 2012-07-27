@@ -15,12 +15,7 @@ if ( isset ($_GET['id']) )
 {
 	$bdd = connection();
 
-	$req = $bdd->prepare('SELECT id, titre FROM news WHERE id=?');
-	$req -> execute(array($_GET['id']));
-	$donnees = $req->fetch();
-	$id_news = $donnees['id'];
-	echo '<p class="gras">'.$donnees['titre'].'</p>';
-	
+	$id_news = affichage_titre_news($bdd,$_GET['id']);
 	?>
 	
 	<form method="POST" action="">
@@ -100,7 +95,6 @@ if ( isset ($_GET['id']) )
 		}	
 
 		echo '<a href="index.php#'.$id_news.'">retour à la news</a>';
-		$req -> closeCursor();
 
 		echo '<p class="gras">Les commentaires déjà postés</p>'; 
 		affichage_commentaires($bdd,$id_news);
