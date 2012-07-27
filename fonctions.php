@@ -96,4 +96,23 @@ function valeur_si_existante($var)
 	}
 }
 
+function verif_pseudo_disponible($bdd,$pseudo_a_tester)
+{
+	$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
+	$req -> execute (array (htmlspecialchars($pseudo_a_tester)) );
+
+	$count = $req->rowCount();
+	$req -> closeCursor(); 
+
+	if($count == 1) 
+	{
+		$retour = 1;
+	}
+	else
+	{
+		$retour = 0;
+	}
+return $retour;
+}
+
 ?>

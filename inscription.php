@@ -41,13 +41,8 @@ if (
 		{	
 			$bdd = connection();
 
-			$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
-			$req -> execute (array (htmlspecialchars($_POST['pseudo'])) );  
-			
-			$count = $req->rowCount();
-			$req -> closeCursor(); 
-
-			if($count == 1) 
+			$i = verif_pseudo_disponible($bdd,$_POST['pseudo']);
+			if($i == 1) 
 			{
 				echo '<p class="rouge">Ce pseudo est déjà utilisé par un autre membre !<br />
 				     Veuiller choisir un autre pseudo !</p>';

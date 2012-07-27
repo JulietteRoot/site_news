@@ -58,13 +58,8 @@ if ( isset ($_GET['id']) )
 	{
 		if (isset ($_POST['pseudo']) )
 		{
-			$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
-			$req -> execute (array ($_POST['pseudo']));
-		
-			$count = $req->rowCount();
-			$req -> closeCursor(); 
-
-			if($count == 1) 
+			$i = verif_pseudo_disponible($bdd,$_POST['pseudo']);
+			if($i == 1) 
 			{
 				echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />
 				     Veuiller choisir un autre pseudo !</p>';
@@ -80,17 +75,17 @@ if ( isset ($_GET['id']) )
 			insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
 		}
 
-		}
-		else
-		{
-			echo '<p class="rouge gras">Vous devez saisir un commentaire !</p>';
+	}
+	else
+	{
+		echo '<p class="rouge gras">Vous devez saisir un commentaire !</p>';
 
-		}	
+	}	
 
-		echo '<a href="index.php#'.$id_news.'">retour à la news</a>';
+	echo '<a href="index.php#'.$id_news.'">retour à la news</a>';
 
-		echo '<p class="gras">Les commentaires déjà postés</p>'; 
-		affichage_commentaires($bdd,$id_news);
+	echo '<p class="gras">Les commentaires déjà postés</p>'; 
+	affichage_commentaires($bdd,$id_news);
 }
 else
 {
