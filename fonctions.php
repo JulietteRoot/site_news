@@ -75,6 +75,19 @@ function affichage_titre_news($bdd,$id)
 	return $id_news;
 }
 
+function definition_pseudo($pseudo_indique)
+{
+	if ( isset($pseudo_indique) && strlen($pseudo_indique) > 0 )
+	{
+		$pseudo = htmlspecialchars($pseudo_indique);
+	}
+	else
+	{
+		$pseudo = "Anonyme";
+	}
+return $pseudo;
+}
+
 function valeur_si_existante($var)
 {
 	if ( isset($var) && strlen($var) > 0 )
