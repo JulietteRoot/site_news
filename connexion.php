@@ -10,6 +10,7 @@
 <body>
 <?php include("fonctions.php"); ?>
 
+<!--La personne se connecte via un formulaire.-->
 <form method="POST" action="">
 <fieldset><legend>Connexion</legend>
 <p> <label for="pseudo">Pseudo :</label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25"
@@ -21,6 +22,8 @@
 </form>
 
 <?php
+
+// On vérifie que le pseudo et le mot de passe ont été saisis.
 if (
 	isset($_POST['pseudo'], $_POST['password']) &&
 	strlen($_POST['pseudo']) > 0 &&

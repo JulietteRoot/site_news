@@ -24,12 +24,14 @@ legend
 }
 
 .validation:hover
+/* pour les boutons */
 {
 	color:green;
 	font-weight:bold;
 }
 
 .annulation:hover
+/* pour les boutons */
 {
 	color:red;
 	font-weight:bold;

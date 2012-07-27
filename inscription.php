@@ -74,7 +74,7 @@ if (
 	}
 }
 
-// si le formulaire n'est pas rempli, on inscrit un message d'erreur.
+// Si le formulaire n'est pas rempli, on inscrit un message d'erreur.
 else
 {
 	echo '<p class="rouge">Vous devez remplir toutes les données demandées !</p>';

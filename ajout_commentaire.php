@@ -36,7 +36,7 @@ if ( isset ($_GET['id']) )
 		<?php
 		valeur_si_existante($_POST['pseudo']);
 
-// Le pseudo est celui choisi, ou "anonyme" si rien n'a été inscrit. 
+// Le pseudo est celui choisi, ou "anonyme" par défaut si rien n'a été inscrit. 
 		$pseudo = definition_pseudo($_POST['pseudo']);
 		
 		echo '/> </p>';
@@ -63,6 +63,13 @@ if ( isset ($_GET['id']) )
 	if ( isset ($_POST['commentaire']) &&
 	     strlen($_POST['commentaire']) > 0 )
 	{
+
+// Si un pseudo a été indiqué, on vérifie qu'il n'appartient pas déjà à un membre.
+
+/* Remarque : dans le cas d'un _vrai_ site, il ne faudrait pas le gérer comme cela.
+En effet, si un membre s'inscrit ultérieurement avec un pseudo "x", les commentaires postés sous ce même pseudo lui seront rétroactivement attribués, ce qui n'est pas correct.
+De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
+*/
 		if (isset ($_POST['pseudo']) )
 		{
 			$i = verif_pseudo_disponible($bdd,$_POST['pseudo']);
