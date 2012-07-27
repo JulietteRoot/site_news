@@ -59,4 +59,17 @@ function affichage_news($bdd)
 	$req -> closeCursor();	
 }
 
+function affichage_commentaires($bdd, $id_news)
+{
+	$req = $bdd -> prepare ('SELECT commentaire FROM commentaires WHERE id_news=? ORDER BY id_commentaire DESC');
+	$req -> execute (array ($id_news) );  
+
+	while ($donnees = $req->fetch())
+	{
+		echo '<p>'.$donnees['commentaire'].'</p>';
+	}
+
+	$req -> closeCursor();
+}
+
 ?>
