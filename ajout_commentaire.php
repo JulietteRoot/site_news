@@ -15,7 +15,8 @@ if ( isset ($_GET['id']) )
 {
 	$bdd = connection();
 
-	$req = $bdd->query('SELECT id, titre FROM news WHERE id='.$_GET['id']);
+	$req = $bdd->prepare('SELECT id, titre FROM news WHERE id=?');
+	$req -> execute(array($_GET['id']));
 	$donnees = $req->fetch();
 	$id_news = $donnees['id'];
 	echo '<p class="gras">'.$donnees['titre'].'</p>';

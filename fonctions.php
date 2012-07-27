@@ -13,6 +13,17 @@ function connection()
 	return $bdd;
 }
 
+function insertion_news($bdd, $titre, $contenu, $pseudo)
+{
+	$req = $bdd -> prepare('INSERT INTO news VALUES (\'\',:titre,:contenu)');
+	$req -> execute (array (
+		'titre' => htmlspecialchars($titre). ' (par ' .$pseudo.')',
+		'contenu' => htmlspecialchars($contenu)
+		) );
+
+	$req -> closeCursor(); 
+}
+
 function insertion_commentaire($bdd,$id_news,$commentaire,$pseudo)
 {
 	$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
@@ -35,27 +46,17 @@ function valeur_si_existante($var)
 	}
 }
 
-/*
-$req = $bdd->query('SELECT id, titre, contenu FROM news ORDER BY id DESC');
-
-while ($donnees = $req->fetch())
+function affichage_news($bdd)
 {
-	echo '<p> <span class="gras" id="'.$donnees['id'].'">'.$donnees['titre'].'</span><br />'
-	.$donnees['contenu'].'<br />';
-	echo '<a href="ajout_commentaire.php?id='.$donnees['id'].'">commentaires</a></p><br />';	
-}	
-$req -> closeCursor();	
-*/
+	$req = $bdd->query('SELECT id, titre, contenu FROM news ORDER BY id DESC');
 
-function insertion_news($bdd, $titre, $contenu, $pseudo)
-{
-	$req = $bdd -> prepare('INSERT INTO news VALUES (\'\',:titre,:contenu)');
-	$req -> execute (array (
-		'titre' => htmlspecialchars($titre). ' (par ' .$pseudo.')',
-		'contenu' => htmlspecialchars($contenu)
-		) );
-
-	$req -> closeCursor(); 
+	while ($donnees = $req->fetch())
+	{
+		echo '<p> <span class="gras" id="'.$donnees['id'].'">'.$donnees['titre'].'</span><br />'
+		.$donnees['contenu'].'<br />';
+		echo '<a href="ajout_commentaire.php?id='.$donnees['id'].'">commentaires</a></p><br />';	
+	}	
+	$req -> closeCursor();	
 }
 
 ?>
