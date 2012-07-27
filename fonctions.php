@@ -138,4 +138,13 @@ function identification_sur_le_site($bdd,$pseudo,$password)
 return $retour;
 }
 
+function ajout_membre($bdd,$pseudo,$password)
+{
+	$req = $bdd -> prepare('INSERT INTO membres VALUES (:pseudo,:password)');
+	$req -> execute (array (
+		'pseudo' => htmlspecialchars($pseudo),
+		'password' => hash('sha1',htmlspecialchars($password))
+		) );
+	$req -> closeCursor();
+}
 ?>

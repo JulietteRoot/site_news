@@ -49,13 +49,8 @@ if (
 			}
 			else
 			{
-				$req = $bdd -> prepare('INSERT INTO membres VALUES (:pseudo,:password)');
-				$req -> execute (array (
-					'pseudo' => htmlspecialchars($_POST['pseudo']),
-					'password' => hash('sha1',htmlspecialchars($_POST['password']))
-					) );
-				$req -> closeCursor();
- 
+				ajout_membre($bdd,$_POST['pseudo'],$_POST['password']);
+
 				$_SESSION['pseudo'] = htmlspecialchars($_POST['pseudo']);
 				header('Refresh:4;url=index.php');
 				echo '<p class="rouge"><span class="gras">Merci de vous être enregistré(e) !</span><br />
