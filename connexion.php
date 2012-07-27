@@ -31,11 +31,15 @@ if (
 	{	
 		$bdd = connection();
 		$i = identification_sur_le_site($bdd,$_POST['pseudo'],$_POST['password']);
+
+// Si l'identification est correcte, la personne est connectée et renvoyée vers l'index.
 		if($i == 0) 
 		{
 			$_SESSION['pseudo'] = htmlspecialchars($_POST['pseudo']);
 			header('Location:index.php');
 		}
+
+// Sinon, elle doit s'identifier à nouveau.
 		else
 		{
 			echo '<p class="rouge">Attention, le pseudo et/ou le mot de passe sont erronés.<br />

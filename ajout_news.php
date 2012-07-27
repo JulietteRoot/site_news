@@ -11,9 +11,13 @@
 <?php include("fonctions.php"); ?>
 
 <?php
+
+// On vérifie que la personne est connectée.
 if ( isset ( $_SESSION['pseudo'] ) )
 {
 	?>
+
+<!--On affiche un formulaire pour créer une nouvelle news.-->
 	<form method="POST" action="">
 	<fieldset><legend>Ajout d'une nouvelle news</legend>
 	<p> <label for="titre">Titre de la news :</label> <input type="text" name="titre" id="titre" size="70" maxlength="60"/> </p>
@@ -22,33 +26,38 @@ if ( isset ( $_SESSION['pseudo'] ) )
 	</fieldset>
 	</form>
 	<?php
+
+// On vérife que toutes les données sont remplies.
+	if (	isset($_POST['titre'], $_POST['contenu']) &&
+		strlen($_POST['titre']) > 0 &&
+		strlen($_POST['contenu']) > 0	 )
+	{
+		try
+		{	
+
+// Si tout est ok, on insère la news dans la base de données, et on renvoie automatiquement vers la page d'accueil.
+			$bdd = connection();
+			insertion_news($bdd,$_POST['titre'],$_POST['contenu'],$_SESSION['pseudo']);
+		
+			header('Location:index.php?news=ok');
+		}
+		catch (Exception $e)
+		{
+			die('Erreur:'.$e->getMessage());
+		}
+	}
+
+// S'il manque une donnée, on affiche un message d'erreur.
+	else
+	{
+	echo '<p class="rouge">Vous devez écrire un titre, et du texte pour votre news !</p>';
+	}
+
 }
+// Si la personne n'est pas connectée, on inscrit un message d'erreur.
 else
 {
 	echo '<p class="rouge gras">Vous devez être connecté(e) pour accéder à cette page !</p>';
-}
-
-if (
-	isset($_POST['titre'], $_POST['contenu']) &&
-	strlen($_POST['titre']) > 0 &&
-	strlen($_POST['contenu']) > 0
-   )
-{
-	try
-	{	
-		$bdd = connection();
-		insertion_news($bdd,$_POST['titre'],$_POST['contenu'],$_SESSION['pseudo']);
-		
-		header('Location:index.php?news=ok');
-	}
-	catch (Exception $e)
-	{
-		die('Erreur:'.$e->getMessage());
-	}
-}
-else
-{
-	echo '<p class="rouge">Vous devez écrire un titre, et du texte pour votre news !</p>';
 }
 
 ?>

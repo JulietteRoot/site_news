@@ -11,6 +11,8 @@
 <?php include("fonctions.php"); ?>
 
 <?php
+
+// On vérifie qu'on peut récupérer le numéro de la news (via l'url).
 if ( isset ($_GET['id']) )
 {
 	$bdd = connection();
@@ -18,6 +20,7 @@ if ( isset ($_GET['id']) )
 	$id_news = affichage_titre_news($bdd,$_GET['id']);
 	?>
 	
+<!-- On affiche un formulaire pour la saisie d'un commentaire.-->
 	<form method="POST" action="">
 	<fieldset><legend>Ajout d'un nouveau commentaire</legend>
 	<?php
@@ -32,6 +35,8 @@ if ( isset ($_GET['id']) )
 		<p> <label for="pseudo">Votre pseudo (<acronym class="italique" title='Si vous ne mentionnez pas de pseudo, vous apparaîtrez en tant que "Anonyme".'>facultatif</acronym>) : </label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25"
 		<?php
 		valeur_si_existante($_POST['pseudo']);
+
+// Le pseudo est celui choisi, ou "anonyme" si rien n'a été inscrit. 
 		$pseudo = definition_pseudo($_POST['pseudo']);
 		
 		echo '/> </p>';
@@ -53,6 +58,8 @@ if ( isset ($_GET['id']) )
 	</form>
 
 	<?php
+
+// On vérifie qu'un commentaire a été saisi.
 	if ( isset ($_POST['commentaire']) &&
 	     strlen($_POST['commentaire']) > 0 )
 	{
@@ -76,6 +83,8 @@ if ( isset ($_GET['id']) )
 		}
 
 	}
+
+// Un message est inscrit pour demander la saisie d'un commentaire si ça n'est pas fait.
 	else
 	{
 		echo '<p class="rouge gras">Vous devez saisir un commentaire !</p>';
@@ -87,6 +96,8 @@ if ( isset ($_GET['id']) )
 	echo '<p class="gras">Les commentaires déjà postés</p>'; 
 	affichage_commentaires($bdd,$id_news);
 }
+
+// En l'absence de numéro de news, on inscrit simplement un message d'erreur.
 else
 {
 	echo '<p class="rouge gras">Erreur. Le lien que vous avez suivi n\'est pas valide...</p>';

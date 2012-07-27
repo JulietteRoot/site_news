@@ -14,6 +14,8 @@ session_unset();
 <?php include("fonctions.php"); ?>
 
 <?php
+
+// Une fois les variables de session détruites, l'internaute est redirigé vers l'index.
 header('Refresh:4;url=index.php');
 echo '<p><span class="gras">Merci de votre visite !</span><br />
 	Vous êtes maintenant déconnecté(e).<br />

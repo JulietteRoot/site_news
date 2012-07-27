@@ -10,6 +10,7 @@
 <body>
 <?php include("fonctions.php"); ?>
 
+<!-- La personne s'inscrit via un formulaire (elle choisit un pseudo et un mot de passe). -->
 <form method="POST" action="">
 <fieldset><legend>Inscription</legend>
 <p> <label for="pseudo">Choisissez un pseudo :</label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25" 
@@ -24,6 +25,8 @@ valeur_si_existante($_POST['pseudo']);
 </form>
 
 <?php
+
+// On vérifie que les données requises ont été remplies.
 if (
 	isset($_POST['pseudo'], $_POST['password'], $_POST['password2']) &&
 	strlen($_POST['pseudo']) > 0 &&
@@ -31,6 +34,8 @@ if (
 	strlen($_POST['password2']) > 0
    )
 {
+
+// On vérifie que les mots de passe (original + vérification) sont les mêmes.
 	if ( $_POST['password'] != $_POST['password2'] )
 	{
 		echo '<p class="rouge">Attention, les 2 mots de passe ne coïncident pas !</p>';
@@ -39,6 +44,8 @@ if (
 	{
 		try
 		{	
+
+// On vérifie que le pseudo choisi n'est pas celui d'un membre déjà enregistré.
 			$bdd = connection();
 
 			$i = verif_pseudo_disponible($bdd,$_POST['pseudo']);
@@ -49,8 +56,11 @@ if (
 			}
 			else
 			{
+
+// Si tout est bon, on rentre les données de la personne dans la BD : elle est inscrite.
 				ajout_membre($bdd,$_POST['pseudo'],$_POST['password']);
 
+// La personne nouvellement inscrite est redirigée vers l'index (en étant connectée).
 				$_SESSION['pseudo'] = htmlspecialchars($_POST['pseudo']);
 				header('Refresh:4;url=index.php');
 				echo '<p class="rouge"><span class="gras">Merci de vous être enregistré(e) !</span><br />
@@ -63,6 +73,8 @@ if (
 		}
 	}
 }
+
+// si le formulaire n'est pas rempli, on inscrit un message d'erreur.
 else
 {
 	echo '<p class="rouge">Vous devez remplir toutes les données demandées !</p>';
