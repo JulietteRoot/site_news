@@ -35,9 +35,10 @@ if ( isset ($_GET['id']) )
 		?>
 		<p> <label for="pseudo">Votre pseudo (<acronym class="italique" title='Si vous ne mentionnez pas de pseudo, vous apparaîtrez en tant que "Anonyme".'>facultatif</acronym>) : </label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25"
 		<?php
+		valeur_si_existante($_POST['pseudo']);
+
 		if ( isset($_POST['pseudo']) && strlen($_POST['pseudo']) > 0 )
 		{
-			echo 'value="'.$_POST['pseudo'].'"';
 			$pseudo = htmlspecialchars($_POST['pseudo']);
 		}
 		else

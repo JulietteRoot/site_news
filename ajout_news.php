@@ -37,16 +37,9 @@ if (
 	try
 	{	
 		$bdd = connection();
-		$req = $bdd -> prepare('INSERT INTO news VALUES (\'\',:titre,:contenu)');
-		$req -> execute (array (
-			'titre' => htmlspecialchars($_POST['titre']). ' (par ' .$_SESSION['pseudo'].')',
-			'contenu' => htmlspecialchars($_POST['contenu'])
-			) );
-
-		$req -> closeCursor(); 
+		insertion_news($bdd,$_POST['titre'],$_POST['contenu'],$_SESSION['pseudo']);
 		
 		header('Location:index.php?news=ok');
-
 	}
 	catch (Exception $e)
 	{

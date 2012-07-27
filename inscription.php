@@ -14,10 +14,7 @@
 <fieldset><legend>Inscription</legend>
 <p> <label for="pseudo">Choisissez un pseudo :</label> <input type="text" name="pseudo" id="pseudo" size="30" maxlength="25" 
 <?php
-if ( isset($_POST['pseudo']) )
-{
-	echo 'value="'.$_POST['pseudo'].'"';
-}
+valeur_si_existante($_POST['pseudo']);
 ?>
 /> </p>
 <p> <label for="password">Choisissez un mot de passe :</label> <input type="password" name="password" id="password" size="30" maxlength="25"/> </p>
