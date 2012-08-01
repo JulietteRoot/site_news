@@ -13,17 +13,6 @@ function connection()
 	return $bdd;
 }
 
-function affichage_titre_news($bdd,$id)
-{
-	$req = $bdd->prepare('SELECT id, titre FROM news WHERE id=?');
-	$req -> execute(array($id));
-	$donnees = $req->fetch();
-	$id_news = $donnees['id'];
-	echo '<p class="gras">'.$donnees['titre'].'</p>';
-	$req -> closeCursor();
-	return $id_news;
-}
-
 function definition_pseudo($pseudo_indique)
 // La variable $pseudo est celle indiquée, ou à défaut "Anonyme".
 {

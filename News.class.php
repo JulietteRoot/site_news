@@ -25,4 +25,16 @@ class News
 		}	
 		$req -> closeCursor();	
 	}
+
+	public function affichage_titre_news($bdd,$id)
+	{
+		$req = $bdd->prepare('SELECT id, titre FROM news WHERE id=?');
+		$req -> execute(array($id));
+		$donnees = $req->fetch();
+		$id_news = $donnees['id'];
+		echo '<p class="gras">'.$donnees['titre'].'</p>';
+		$req -> closeCursor();
+		return $id_news;
+	}
+
 }

@@ -9,7 +9,8 @@
 
 <body>
 <?php include("fonctions.php"); ?>
-<?php include("Commentaire.class.php"); ?>
+<?php include_once("Commentaire.class.php"); ?>
+<?php include_once("News.class.php"); ?>
 
 <?php
 
@@ -18,7 +19,8 @@ if ( isset ($_GET['id']) )
 {
 	$bdd = connection();
 
-	$id_news = affichage_titre_news($bdd,$_GET['id']);
+	$news = new News();
+	$id_news = $news->affichage_titre_news($bdd,$_GET['id']);
 	?>
 	
 <!-- On affiche un formulaire pour la saisie d'un commentaire.-->
