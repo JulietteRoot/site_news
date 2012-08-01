@@ -11,6 +11,7 @@
 <?php include("fonctions.php"); ?>
 <?php include_once("Commentaire.class.php"); ?>
 <?php include_once("News.class.php"); ?>
+<?php include_once("Membre.class.php"); ?>
 
 <?php
 
@@ -77,7 +78,8 @@ De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
 */
 		if (isset ($_POST['pseudo']) )
 		{
-			$i = verif_pseudo_disponible($bdd,$_POST['pseudo']);
+			$membre = new Membre();
+			$i = $membre->verif_pseudo_disponible($bdd,$_POST['pseudo']);
 			if($i == 1) 
 			{
 				echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />

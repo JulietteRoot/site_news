@@ -48,8 +48,9 @@ if (
 
 // On vérifie que le pseudo choisi n'est pas celui d'un membre déjà enregistré.
 			$bdd = connection();
+			$membre = new Membre();
 
-			$i = verif_pseudo_disponible($bdd,$_POST['pseudo']);
+			$i = $membre->verif_pseudo_disponible($bdd,$_POST['pseudo']);
 			if($i == 1) 
 			{
 				echo '<p class="rouge">Ce pseudo est déjà utilisé par un autre membre !<br />
@@ -59,7 +60,6 @@ if (
 			{
 
 // Si tout est bon, on rentre les données de la personne dans la BD : elle est inscrite.
-				$membre = new Membre();
 				$membre -> ajout_membre($bdd,$_POST['pseudo'],$_POST['password']);
 
 // La personne nouvellement inscrite est redirigée vers l'index (en étant connectée).

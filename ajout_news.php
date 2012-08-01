@@ -9,7 +9,7 @@
 
 <body>
 <?php include("fonctions.php"); ?>
-<?php include("News.class.php"); ?>
+<?php include_once("News.class.php"); ?>
 
 <?php
 
