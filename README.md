@@ -1,4 +1,4 @@
 site_news
 =========
 
-Voilà.
+Fichier inutile pour l'instant..
