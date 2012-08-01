@@ -9,6 +9,7 @@
 
 <body>
 <?php include("fonctions.php"); ?>
+<?php include_once("Membre.class.php"); ?>
 
 <!-- La personne s'inscrit via un formulaire (elle choisit un pseudo et un mot de passe). -->
 <form method="POST" action="">
@@ -58,7 +59,8 @@ if (
 			{
 
 // Si tout est bon, on rentre les données de la personne dans la BD : elle est inscrite.
-				ajout_membre($bdd,$_POST['pseudo'],$_POST['password']);
+				$membre = new Membre();
+				$membre -> ajout_membre($bdd,$_POST['pseudo'],$_POST['password']);
 
 // La personne nouvellement inscrite est redirigée vers l'index (en étant connectée).
 				$_SESSION['pseudo'] = htmlspecialchars($_POST['pseudo']);

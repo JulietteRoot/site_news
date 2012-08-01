@@ -9,6 +9,7 @@
 
 <body>
 <?php include("fonctions.php"); ?>
+<?php include("Membre.class.php"); ?>
 
 <!--La personne se connecte via un formulaire.-->
 <form method="POST" action="">
@@ -33,7 +34,8 @@ if (
 	try
 	{	
 		$bdd = connection();
-		$i = identification_sur_le_site($bdd,$_POST['pseudo'],$_POST['password']);
+		$membre = new Membre();
+		$i = $membre->identification_sur_le_site($bdd,$_POST['pseudo'],$_POST['password']);
 
 // Si l'identification est correcte, la personne est connectée et renvoyée vers l'index.
 		if($i == 0) 
