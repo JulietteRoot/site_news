@@ -9,6 +9,7 @@
 
 <body>
 <?php include("fonctions.php"); ?>
+<?php include("Commentaire.class.php"); ?>
 
 <?php
 
@@ -59,6 +60,8 @@ if ( isset ($_GET['id']) )
 
 	<?php
 
+	$commentaire = new Commentaire();
+
 // On vérifie qu'un commentaire a été saisi.
 	if ( isset ($_POST['commentaire']) &&
 	     strlen($_POST['commentaire']) > 0 )
@@ -80,13 +83,13 @@ De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
 			}
 			else
 			{
-				insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
+				$commentaire->insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
 			}
 	
 		}
 		else
 		{
-			insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
+			$commentaire->insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
 		}
 
 	}
@@ -101,7 +104,7 @@ De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
 	echo '<a href="index.php#'.$id_news.'">retour à la news</a>';
 
 	echo '<p class="gras">Les commentaires déjà postés</p>'; 
-	affichage_commentaires($bdd,$id_news);
+	$commentaire->affichage_commentaires($bdd,$id_news);
 }
 
 // En l'absence de numéro de news, on inscrit simplement un message d'erreur.
