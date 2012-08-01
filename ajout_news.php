@@ -9,6 +9,7 @@
 
 <body>
 <?php include("fonctions.php"); ?>
+<?php include("News.class.php"); ?>
 
 <?php
 
@@ -37,7 +38,8 @@ if ( isset ( $_SESSION['pseudo'] ) )
 
 // Si tout est ok, on insère la news dans la base de données, et on renvoie automatiquement vers la page d'accueil.
 			$bdd = connection();
-			insertion_news($bdd,$_POST['titre'],$_POST['contenu'],$_SESSION['pseudo']);
+			$news = new News();
+			$news->insertion_news($bdd,$_POST['titre'],$_POST['contenu'],$_SESSION['pseudo']);
 		
 			header('Location:index.php?news=ok');
 		}

@@ -13,17 +13,6 @@ function connection()
 	return $bdd;
 }
 
-function insertion_news($bdd, $titre, $contenu, $pseudo)
-{
-	$req = $bdd -> prepare('INSERT INTO news VALUES (\'\',:titre,:contenu)');
-	$req -> execute (array (
-		'titre' => htmlspecialchars($titre). ' (par ' .$pseudo.')',
-		'contenu' => htmlspecialchars($contenu)
-		) );
-
-	$req -> closeCursor(); 
-}
-
 function insertion_commentaire($bdd,$id_news,$commentaire,$pseudo)
 {
 	$req = $bdd -> prepare('INSERT INTO commentaires VALUES (\'\',:id_news,:commentaire)');
@@ -36,19 +25,6 @@ function insertion_commentaire($bdd,$id_news,$commentaire,$pseudo)
 	header('Refresh:5;url=index.php#'.$id_news);
 	echo '<p class="rouge gras">Votre commentaire a bien été posté !<br />
 	Vous allez être automatiquement redirigé(e) vers la news...</p>';
-}
-
-function affichage_news($bdd)
-{
-	$req = $bdd->query('SELECT id, titre, contenu FROM news ORDER BY id DESC');
-
-	while ($donnees = $req->fetch())
-	{
-		echo '<p> <span class="gras" id="'.$donnees['id'].'">'.$donnees['titre'].'</span><br />'
-		.$donnees['contenu'].'<br />';
-		echo '<a href="ajout_commentaire.php?id='.$donnees['id'].'">commentaires</a></p><br />';	
-	}	
-	$req -> closeCursor();	
 }
 
 function affichage_commentaires($bdd, $id_news)

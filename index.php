@@ -9,6 +9,7 @@
 
 <body>
 <?php include("fonctions.php"); ?>
+<?php include("News.class.php"); ?>
 
 <?php
 
@@ -44,7 +45,8 @@ if ( isset ($_GET['news']) && $_GET['news'] == "ok" )
 
 echo '<br /> <br />';
 
-affichage_news($bdd);
+$news = new News();
+$news->affichage_news($bdd);
 
 ?>
 
