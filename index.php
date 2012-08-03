@@ -12,13 +12,6 @@
 <?php include_once("News.class.php"); ?>
 <?php include_once("Mabdd.class.php"); ?>
 
-<?php
-
-$mabdd = new Mabdd();
-$bdd = $mabdd->connection();
-
-?>
-
 <p>
 <span class="gras">Bienvenue 
 <?php
@@ -48,7 +41,7 @@ if ( isset ($_GET['news']) && $_GET['news'] == "ok" )
 echo '<br /> <br />';
 
 $news = new News();
-$news->affichage_news($bdd);
+$news->affichage_news();
 
 ?>
 

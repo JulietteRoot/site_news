@@ -3,9 +3,9 @@ include_once("Mabdd.class.php");
 
 class Membre extends Mabdd
 {
-	public function ajout_membre ($bdd,$pseudo,$password)
+	public function ajout_membre ($pseudo,$password)
 	{
-		$req = $bdd -> prepare('INSERT INTO membres VALUES (:pseudo,:password)');
+		$req = $this->bdd -> prepare('INSERT INTO membres VALUES (:pseudo,:password)');
 		$req -> execute (array (
 			'pseudo' => htmlspecialchars($pseudo),
 			'password' => hash('sha1',htmlspecialchars($password))
@@ -13,11 +13,11 @@ class Membre extends Mabdd
 		$req -> closeCursor();
 	}
 
-	public function identification_sur_le_site($bdd,$pseudo,$password)
+	public function identification_sur_le_site($pseudo,$password)
 // renvoie "0" si l'identification est correcte, sinon renvoie "1".
 	{
 
-		$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = :pseudo AND password = :password');
+		$req = $this->bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = :pseudo AND password = :password');
 		$req -> execute (array (
 			'pseudo' => htmlspecialchars($pseudo),
 			'password' => hash('sha1',htmlspecialchars($password))
@@ -37,10 +37,10 @@ class Membre extends Mabdd
 	return $retour;
 	}
 
-	public function verif_pseudo_disponible($bdd,$pseudo_a_tester)
+	public function verif_pseudo_disponible($pseudo_a_tester)
 // renvoie "0" si le pseudo est disponible, et "1" s'il est déjà pris.
 	{
-		$req = $bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
+		$req = $this->bdd -> prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
 		$req -> execute (array (htmlspecialchars($pseudo_a_tester)) );
 
 		$count = $req->rowCount();

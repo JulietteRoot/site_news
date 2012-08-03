@@ -35,8 +35,7 @@ if (
 	try
 	{	
 		$membre = new Membre();
-		$bdd = $membre->connection();
-		$est_identifie = $membre->identification_sur_le_site($bdd,$_POST['pseudo'],$_POST['password']);
+		$est_identifie = $membre->identification_sur_le_site($_POST['pseudo'],$_POST['password']);
 
 // Si l'identification est correcte, la personne est connectée et renvoyée vers l'index.
 		if($est_identifie == 0) 

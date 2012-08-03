@@ -21,8 +21,7 @@ if ( isset ($_GET['id']) )
 {
 	
 	$news = new News();
-	$bdd = $news->connection();
-	$id_news = $news->affichage_titre_news($bdd,$_GET['id']);
+	$id_news = $news->affichage_titre_news($_GET['id']);
 	?>
 	
 <!-- On affiche un formulaire pour la saisie d'un commentaire.-->
@@ -80,7 +79,7 @@ De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
 		if (isset ($_POST['pseudo']) )
 		{
 			$membre = new Membre();
-			$pseudo_dispo = $membre->verif_pseudo_disponible($bdd,$_POST['pseudo']);
+			$pseudo_dispo = $membre->verif_pseudo_disponible($_POST['pseudo']);
 			if($pseudo_dispo == 1) 
 			{
 				echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />
@@ -88,13 +87,13 @@ De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
 			}
 			else
 			{
-				$commentaire->insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
+				$commentaire->insertion_commentaire($id_news,$_POST['commentaire'],$pseudo);
 			}
 	
 		}
 		else
 		{
-			$commentaire->insertion_commentaire($bdd,$id_news,$_POST['commentaire'],$pseudo);
+			$commentaire->insertion_commentaire($id_news,$_POST['commentaire'],$pseudo);
 		}
 
 	}
@@ -109,7 +108,7 @@ De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
 	echo '<a href="index.php#'.$id_news.'">retour à la news</a>';
 
 	echo '<p class="gras">Les commentaires déjà postés</p>'; 
-	$commentaire->affichage_commentaires($bdd,$id_news);
+	$commentaire->affichage_commentaires($id_news);
 }
 
 // En l'absence de numéro de news, on inscrit simplement un message d'erreur.

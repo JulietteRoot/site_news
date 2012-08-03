@@ -2,9 +2,10 @@
 
 class Mabdd
 {
-	private $bdd;	
+	protected $bdd;	
 
-	public function connection()
+	public function __construct()
+	// fonction de connection à la base de données.
 	{
 		try
 		{
