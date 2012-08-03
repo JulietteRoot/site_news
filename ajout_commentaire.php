@@ -8,11 +8,10 @@
 </head>
 
 <body>
-<?php include("fonctions.php"); ?>
-<?php include_once("Commentaire.class.php"); ?>
-<?php include_once("News.class.php"); ?>
-<?php include_once("Membre.class.php"); ?>
-<?php include_once("Mabdd.class.php"); ?>
+<?php include_once("fonctions.php"); ?>
+<?php include_once("classes/Commentaire.class.php"); ?>
+<?php include_once("classes/News.class.php"); ?>
+<?php include_once("classes/Membre.class.php"); ?>
 
 <?php
 

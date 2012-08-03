@@ -8,9 +8,8 @@
 </head>
 
 <body>
-<?php include("fonctions.php"); ?>
-<?php include_once("News.class.php"); ?>
-<?php include_once("Mabdd.class.php"); ?>
+<?php include_once("fonctions.php"); ?>
+<?php include_once("classes/News.class.php"); ?>
 
 <p>
 <span class="gras">Bienvenue 

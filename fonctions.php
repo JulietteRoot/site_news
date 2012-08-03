@@ -11,7 +11,7 @@ function definition_pseudo($pseudo_indique)
 	{
 		$pseudo = "Anonyme";
 	}
-return $pseudo;
+	return $pseudo;
 }
 
 function valeur_si_existante($var)

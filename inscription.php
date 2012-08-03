@@ -8,9 +8,8 @@
 </head>
 
 <body>
-<?php include("fonctions.php"); ?>
-<?php include_once("Membre.class.php"); ?>
-<?php include_once("Mabdd.class.php"); ?>
+<?php include_once("fonctions.php"); ?>
+<?php include_once("classes/Membre.class.php"); ?>
 
 <!-- La personne s'inscrit via un formulaire (elle choisit un pseudo et un mot de passe). -->
 <form method="POST" action="">
