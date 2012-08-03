@@ -1,6 +1,7 @@
 <?php
+include_once("Mabdd.class.php");
 
-class Commentaire
+class Commentaire extends Mabdd
 {
 	public function insertion_commentaire($bdd,$id_news,$commentaire,$pseudo)
 	{

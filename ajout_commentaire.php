@@ -12,15 +12,16 @@
 <?php include_once("Commentaire.class.php"); ?>
 <?php include_once("News.class.php"); ?>
 <?php include_once("Membre.class.php"); ?>
+<?php include_once("Mabdd.class.php"); ?>
 
 <?php
 
 // On vérifie qu'on peut récupérer le numéro de la news (via l'url).
 if ( isset ($_GET['id']) )
 {
-	$bdd = connection();
-
+	
 	$news = new News();
+	$bdd = $news->connection();
 	$id_news = $news->affichage_titre_news($bdd,$_GET['id']);
 	?>
 	

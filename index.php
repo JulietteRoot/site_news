@@ -10,10 +10,12 @@
 <body>
 <?php include("fonctions.php"); ?>
 <?php include_once("News.class.php"); ?>
+<?php include_once("Mabdd.class.php"); ?>
 
 <?php
 
-$bdd = connection();
+$mabdd = new Mabdd();
+$bdd = $mabdd->connection();
 
 ?>
 

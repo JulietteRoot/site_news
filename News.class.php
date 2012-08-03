@@ -1,6 +1,7 @@
 <?php
+include_once("Mabdd.class.php");
 
-class News
+class News extends Mabdd
 {
 	public function insertion_news($bdd, $titre, $contenu, $pseudo)
 	{

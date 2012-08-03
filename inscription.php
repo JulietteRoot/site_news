@@ -10,6 +10,7 @@
 <body>
 <?php include("fonctions.php"); ?>
 <?php include_once("Membre.class.php"); ?>
+<?php include_once("Mabdd.class.php"); ?>
 
 <!-- La personne s'inscrit via un formulaire (elle choisit un pseudo et un mot de passe). -->
 <form method="POST" action="">
@@ -47,8 +48,8 @@ if (
 		{	
 
 // On vérifie que le pseudo choisi n'est pas celui d'un membre déjà enregistré.
-			$bdd = connection();
 			$membre = new Membre();
+			$bdd = $membre->connection();
 
 			$i = $membre->verif_pseudo_disponible($bdd,$_POST['pseudo']);
 			if($i == 1) 

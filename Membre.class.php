@@ -1,6 +1,7 @@
 <?php
+include_once("Mabdd.class.php");
 
-class Membre
+class Membre extends Mabdd
 {
 	public function ajout_membre ($bdd,$pseudo,$password)
 	{
