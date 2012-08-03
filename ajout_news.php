@@ -22,8 +22,22 @@ if ( isset ( $_SESSION['pseudo'] ) )
 <!--On affiche un formulaire pour créer une nouvelle news.-->
 	<form method="POST" action="">
 	<fieldset><legend>Ajout d'une nouvelle news</legend>
-	<p> <label for="titre">Titre de la news :</label> <input type="text" name="titre" id="titre" size="70" maxlength="60"/> </p>
-	<p> <textarea name="contenu" id="contenu" rows="25" cols="105">Écrivez votre news ici.</textarea> </p>
+	<p> <label for="titre">Titre de la news :</label> <input type="text" name="titre" id="titre" size="70" maxlength="60"
+		<?php
+		valeur_si_existante($_POST['titre']);
+		?>
+	/> </p>
+	<p> <textarea name="contenu" id="contenu" rows="25" cols="105"><?php
+	if ( isset($_POST['contenu']) && strlen($_POST['contenu']) > 0 )
+	{
+		echo $_POST['contenu'];
+	}
+	else
+	{
+		echo 'Écrivez votre news ici.';
+	}
+	?>
+	</textarea> </p>
 	<input class="validation" type="submit" value="poster" /> <input class="annulation" type="reset" value="annuler" />
 	</fieldset>
 	</form>
