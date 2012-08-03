@@ -36,10 +36,10 @@ if (
 	{	
 		$membre = new Membre();
 		$bdd = $membre->connection();
-		$i = $membre->identification_sur_le_site($bdd,$_POST['pseudo'],$_POST['password']);
+		$est_identifie = $membre->identification_sur_le_site($bdd,$_POST['pseudo'],$_POST['password']);
 
 // Si l'identification est correcte, la personne est connectée et renvoyée vers l'index.
-		if($i == 0) 
+		if($est_identifie == 0) 
 		{
 			$_SESSION['pseudo'] = htmlspecialchars($_POST['pseudo']);
 			header('Location:index.php');

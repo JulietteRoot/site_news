@@ -80,8 +80,8 @@ De plus, un membre pourrait très bien s'inscrire sous le pseudo "anonyme"...
 		if (isset ($_POST['pseudo']) )
 		{
 			$membre = new Membre();
-			$i = $membre->verif_pseudo_disponible($bdd,$_POST['pseudo']);
-			if($i == 1) 
+			$pseudo_dispo = $membre->verif_pseudo_disponible($bdd,$_POST['pseudo']);
+			if($pseudo_dispo == 1) 
 			{
 				echo '<p class="rouge gras">Ce pseudo est déjà utilisé par un membre !<br />
 				     Veuiller choisir un autre pseudo !</p>';
